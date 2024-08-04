@@ -6,41 +6,41 @@
 //1. O(n)
 bool IsValidParentheses(std::string s)
 {
-	std::stack<char> stk;
+	std::stack<char> st;
 	for (int i = 0; i < s.size(); i++)
 	{
 		char c = s[i];
 		if (c == '(' || c == '{' || c == '[')
-			stk.push(c);
+			st.push(c);
 		else {
-			if (stk.size() == 0)
+			if (s.size() == 0)
 				return false;
-			char pre = stk.top();
+			char pre = st.top();
 			switch (c)
 			{
 			case ')':
 				if (pre == '(')
-					stk.pop();
+					st.pop();
 				else
 					return false;
 				break;
 
 			case ']':
 				if (pre == '[')
-					stk.pop();
+					st.pop();
 				else
 					return false;
 				break;
 			case '}':
 				if (pre == '{')
-					stk.pop();
+					st.pop();
 				else
 					return false;
 				break;
 			}
 		}
 	}
-	if (stk.empty())
+	if (s.empty())
 		return true;
 	else
 		return false;
@@ -153,6 +153,17 @@ void SetZeroesRowCol(std::vector<std::vector<int>>& matrix)
 	column = 0; 
 	row = 0;
 
+	if (zeroRC.size() >= matrix.size() || zeroRC.size() >= matrix[0].size())
+	{
+		for (auto& r : matrix)
+			{
+				for (auto& c : r)
+				{
+					c = 0;				
+				}
+			}
+	}
+
 	for (auto p : zeroRC)
 	{
 		for (auto& r : matrix)
@@ -197,4 +208,5 @@ int main()
 	//		}
 	//		std::cout << std::endl;
 	//	}
+	// 
 }
