@@ -6,34 +6,51 @@
 //1. O(n)
 bool IsValidParentheses(std::string s)
 {
-	bool check{false};
-	for (int i = 0; i < s.size()-1; i += 2)
+	std::stack<char> stk;
+	for (int i = 0; i < s.size(); i++)
 	{
-		if (s[i] == '(' || s[i] == '{' || s[i] == '[')
-		{
-			switch (s[i])
+		char c = s[i];
+		if (c == '(' || c == '{' || c == '[')
+			stk.push(c);
+		else {
+			if (stk.size() == 0)
+				return false;
+			char pre = stk.top();
+			switch (c)
 			{
-			case '(':
-				if (s[i + 1] == ')') check = true;
-				else check = false;
+			case ')':
+				if (pre == '(')
+					stk.pop();
+				else
+					return false;
 				break;
-			case '[':
-				if (s[i + 1] == ']') check = true;
-				else check = false;
+
+			case ']':
+				if (pre == '[')
+					stk.pop();
+				else
+					return false;
 				break;
-			case '{':
-				if (s[i + 1] == '}') check = true;
-				else check = false;
+			case '}':
+				if (pre == '{')
+					stk.pop();
+				else
+					return false;
 				break;
 			}
 		}
-		else
-		{
-			check = false;
-		}
-		if (check == false) return false;
 	}
-	return true;
+	if (stk.empty())
+		return true;
+	else
+		return false;
+}
+
+————————————————
+
+版权声明：本文为博主原创文章，遵循 CC 4.0 BY - SA 版权协议，转载请附上原文出处链接和本声明。
+
+原文链接：https ://blog.csdn.net/zhaoyuxiang126/article/details/46606453
 }
 
 struct ListNode
