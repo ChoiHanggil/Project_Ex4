@@ -13,7 +13,7 @@ bool IsValidParentheses(std::string s)
 		if (c == '(' || c == '{' || c == '[')
 			st.push(c);
 		else {
-			if (s.size() == 0)
+			if (st.size() == 0)
 				return false;
 			char pre = st.top();
 			switch (c)
@@ -65,7 +65,7 @@ ListNode* ResverseList(ListNode* head)
 
 	head->next = nullptr;
 
-	if (p->next)
+	while (p->next)
 	{
 		p->next = temp;
 		temp = p;
@@ -75,6 +75,20 @@ ListNode* ResverseList(ListNode* head)
 	return p;
 }
 
+ListNode* ResverseList2(ListNode* head)
+{
+	if (node == nullptr || node->next == nullptr)
+	{
+		return 0;
+	}
+
+	ListNode* new_head = ResverseList2(node->next);
+
+	node->next->next = node;
+	node->next = nullptr;
+
+	return new_head;
+}
 //3.O(n)
 int MissingNumber(std::vector<int>& nums)
 {
@@ -92,8 +106,19 @@ int MissingNumber(std::vector<int>& nums)
 
 	return total - numsSum;
 }
+int MissingNumber2(std::vector<int>& nums)
+{
+	int n = nums.size();
+	for (i = 0~size)
+	{
+		n ^= i;
+		n ^= nums[i];
+	}
+	return n;
+}
 
 //4.O(n * lng n)
+//min heap, max heap로 만들어서 top을 팝,
 std::vector<int> MostFrequentElements(std::vector<int>& nums,const int k)
 {
 	if (nums.size() == 1)
@@ -132,6 +157,7 @@ std::vector<int> MostFrequentElements(std::vector<int>& nums,const int k)
 }
 
 //5.O( min(m*m*n, m*n*n) )
+//패인트 재귀
 void SetZeroesRowCol(std::vector<std::vector<int>>& matrix)
 {
 	int row{}, column{};
